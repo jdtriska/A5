@@ -1,18 +1,32 @@
 package avp;
 
 public class Engine {
-	static boolean alienNext;	
-	Predator predator;
-	Alien alien; 
-	Info pInfo; //predator's info
-	Info aInfo; //alien's info
+	static boolean alienNext;
+	private Ship ship;
+	private Predator predator;
+	private Alien alien; 
+	private static Info pInfo; //predator's info
+	private static Info aInfo; //alien's info
 	int aCounter; //specifies alien's number of turns remaining until last move is completed
 	int pCounter;//specifies predator's number of turns remaining until last move is completed
 	
+	public Engine() {
+		ship = new Ship();
+		predator = new Predator();
+		alien = new Alien();
+		predator.init(ship);
+		alien.init(ship);
+		pInfo = updateInfo(pInfo);
+		aInfo = updateInfo(aInfo);
+		play();
+	}
+	
 	public static void main(String[] args) {
-		Ship ship= new Ship();
-		init();
-		while (predator is not in control room and alien is not in predators node){
+		new Engine();
+	}
+	
+	public void play() {
+		while (!pInfo.atControlRoom && ship.){
 			if (alienNext){
 				alien.nextMove(aInfo);
 				update aInfo
@@ -35,12 +49,8 @@ public class Engine {
 		if (alien is in predator node) print "alien wins"
 	}
 
-	
-	public static void init(){
-		predator= new Predator();
-		alien= new Alien();
-		predator.init(ship);
-		alien.init(ship);
+	public static Info updateInfo(Info i) {
+		Info inf = new Info();
+		return inf;
 	}
-
 }

@@ -31,23 +31,22 @@ public class Predator implements Agent {
 	    * @return the agent's desired next move.
 	    */
 	   public Move nextMove(Info info) {
-		   if ((this.sensesAlien()) && (info.adversaryDirection == myShip.getPath(pNode, crnode).get(0)){
-			   Move thisMove= new Move();
-			   thisMove.edge= null;
+		   Move m = new Move();
+		   if (info.adversaryPresent) {
+			   m.edge = info.adversaryDirection;
+			   m.move = true;
+			   m.changeState = false;
+		   }
 		   if (this.sensesAlien()) && (info.adversaryDirection != myShip.getPath(pNode, crnode).get(0)){
 				   Move thisMove= new Move();
 				   thisMove.edge= myShip.getPath(pNode, crnode).get(0);
 				   thisMove.changeState= true;}
-				else{
+				else {
 				Move thisMove= new Move();
 				thisMove.edge= myShip.getPath(pNode, crnode).get(0);
-				thisMove.changeState= false;}	
-					   
+				thisMove.changeState= false;
+				}	
+
 		   return null;
-	}
-	   public boolean sensesAlien(){
-		   int d= myShip.getPath(pNode, aNode);
-		   if (d <= GameConstants.PRED_SENSE) return true;
-		   else return false;
 	   }
-	}
+   }
