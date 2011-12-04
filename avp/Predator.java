@@ -1,12 +1,11 @@
 package avp;
-import ugraph.*;
 
 public class Predator implements Agent {
 
 	//represents predator's perception of the ship
 		private Ship myShip;
 		public Predator() {
-			myShip = null;
+			setMyShip(null);
 		}
 	/**
 	    * Called to initialize the agent. The parameter ship gives the agent's
@@ -18,7 +17,7 @@ public class Predator implements Agent {
 	    *           for the Alien.
 	    */
 	   public void init(Ship ship){
-		   myShip = ship;
+		   setMyShip(ship);
 		   //get the control room node 
 		   //pick random nodes until you get to one that is a certain distance, place predator there
 	   }
@@ -33,7 +32,7 @@ public class Predator implements Agent {
 	   public Move nextMove(Info info) {
 		   Move m = new Move();
 		   if (info.ship != null) {
-			   myShip = info.ship;
+			   setMyShip(info.ship);
 		   }
 		   if (info.adversaryPresent) {
 			   m.move = true;
@@ -52,4 +51,10 @@ public class Predator implements Agent {
 		    */
 		   return null;
 	   }
+	public Ship getMyShip() {
+		return myShip;
+	}
+	public void setMyShip(Ship myShip) {
+		this.myShip = myShip;
+	}
    }

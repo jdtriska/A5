@@ -1,8 +1,9 @@
 package avp;
-import ugraph.*;
+
+import java.util.Iterator;
 
 public class Engine {
-	static boolean alienNext;
+	static boolean alienNext = false;
 	private Ship ship;
 	private Predator predator;
 	private Alien alien;
@@ -12,8 +13,10 @@ public class Engine {
 	private Node cNode; //control room's location
 	private Info pInfo; //predator's info
 	private Info aInfo; //alien's info
+	private GUI avpGUI;
 	int aCounter; //specifies alien's number of turns remaining until last move is completed
 	int pCounter;//specifies predator's number of turns remaining until last move is completed
+	final int SPEED_RATIO = 2;
 	
 	private final int ALIEN = 0;
 	private final int PREDATOR = 1;
@@ -26,24 +29,56 @@ public class Engine {
 		alien = new Alien();
 		predator.init(ship);
 		alien.init(ship);
+		cNode = getNode(CONTROL);
+		sNode = getNode(SCANNER);
 		aNode = getNode(ALIEN);
 		pNode = getNode(PREDATOR);
-		sNode = getNode(SCANNER);
-		cNode = getNode(CONTROL);
+		avpGUI = new GUI(ship);
+		avpGUI.setVisible(true);
 		play();
 	}
 	
-	private Node getNode(int type) {
-		//get initial node for alien (type 0) predator (type 1) scanner (type 2) and control room (type 3)
+	private Node getNode(int type) {/************IN PROGRESS*************/
+		//get initial node for alien, predator, scanner, and control room
+		boolean flag = true;
+		Node n = new Node();
 		switch(type) {
 		case ALIEN:
-			return null;
+			while(flag) {
+				n = getRandomNode(ship);
+				if(n.getValue() == 0) {
+					n.setValue(-1);
+					flag = false;
+				}
+				}
+			return n;
 		case PREDATOR:
-			return null;
+			while(flag) {
+				n = getRandomNode(ship);
+				if(n.getValue() == 0) {
+					n.setValue(1);
+					flag = false;
+				}
+			}
+			return n;
 		case SCANNER:
-			return null;
+			while(flag) {
+				n = getRandomNode(ship);
+				if(n.getValue() == 0) {
+					n.setValue(-2);
+					flag = false;
+				}
+			}
+			return n;
 		case CONTROL:
-			return null;
+			while(flag) {
+				n = getRandomNode(ship);
+				if(n.getValue() == 0) {
+					n.setValue(2);
+					flag = false;
+				}
+			}
+			return n;
 		default:
 			return null;
 		}
@@ -53,17 +88,26 @@ public class Engine {
 		new Engine();
 	}
 	
-	public void play() {
+	public void play() {/************IN PROGRESS*************/
+		int aMoves = SPEED_RATIO;
 		while (!pInfo.atControlRoom && aNode.compareTo(pNode) != 0){
+			avpGUI.repaint();
 			pInfo = updateInfo(pInfo, PREDATOR);
 			aInfo = updateInfo(aInfo, ALIEN);
+			Move move = new Move();
 			if (alienNext){
-				alien.nextMove(aInfo);
-				alienNext = false;
+				
+				move = alien.nextMove(aInfo);
+				if (move.move = true && move.edge != null) {
+					
+				}
+				
 					/*DEPRECATED: if Alien has scanner update myship to actual
 					Update state of any edges
 					Check whether alien can now sense predator*/
-
+				if(aMoves == 0);
+					alienNext = false;
+				aMoves--;
 			}
 			else{
 				predator.nextMove(pInfo);
@@ -73,19 +117,31 @@ public class Engine {
 					Check whether predator can now sense alien*/
 			}
 		}
-		
-		//if (predator is in control room) print "predator wins"
-		//if (alien is in predator node) print "alien wins"
+		//Who won?
+		if(pNode.compareTo(aNode) == 0) {
+			System.out.println("Alien wins!");
+		}
+		else if(pInfo.atControlRoom) {
+			System.out.println("Predator wins!");
+		}
 	}
-
-	public Info updateInfo(Info i, int t) {
-		Info inf = new Info();
+//updates info for Alien and Predator
+	public Info updateInfo(Info i, int t) {/************IN PROGRESS*************/
 		switch(t) {
 		case ALIEN:
 			break;
 		case PREDATOR:
 			break;
 		}
-		return inf;
+		return i;
+	}
+	public Node getRandomNode(Ship s) {
+		Node rNode = new Node();
+		int shipSize = s.getNodes().size();
+		Iterator iter = s.getNodes().iterator();
+		for(int i = 0; i < (shipSize - 1); i++) {
+			rNode = (Node) iter.next();
+		}
+		return rNode;
 	}
 }

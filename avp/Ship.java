@@ -1,6 +1,5 @@
 //****/
 package avp;
-
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -18,7 +17,7 @@ public class Ship implements UGraph<Node, Edge>, GameConstants {
 	RandomBag<Edge> edgegrid;
 	Map<Edge, Edge> edges;
 
-	Ship() {
+	public Ship() {
 		nodes = new HashMap<Node, Node>();
 		edgegrid = new RandomBag<Edge>();
 		edges = new HashMap<Edge, Edge>();

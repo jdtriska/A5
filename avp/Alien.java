@@ -1,12 +1,11 @@
 package avp;
-import ugraph.*;
 
 public class Alien implements Agent {
 
 	//represents alien's perception of the ship
 	private Ship myShip;
 	public Alien() {
-		myShip = null;
+		setMyShip(null);
 	}
 	
 	/**
@@ -19,7 +18,7 @@ public class Alien implements Agent {
 	    *           for the Alien.
 	    */
 	   public void init(Ship ship) {
-		   myShip = null;
+		   setMyShip(null);
 	   }
 
 	   /**
@@ -32,7 +31,7 @@ public class Alien implements Agent {
 	   public Move nextMove(Info info) {
 		   Move m = new Move();
 		   if (info.ship != null) {
-			   myShip = info.ship;
+			   setMyShip(info.ship);
 		   }
 		   if (info.adversaryPresent) {
 			   m.edge = info.adversaryDirection;
@@ -51,5 +50,13 @@ public class Alien implements Agent {
 		   
 		   return null;
 	   }
+
+	public Ship getMyShip() {
+		return myShip;
+	}
+
+	public void setMyShip(Ship myShip) {
+		this.myShip = myShip;
+	}
 
 	}
