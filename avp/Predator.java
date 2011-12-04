@@ -1,8 +1,5 @@
-//test
-
 package avp;
-
-
+import ugraph.*;
 
 public class Predator implements Agent {
 
@@ -33,11 +30,11 @@ public class Predator implements Agent {
 	   public Move nextMove(Info info) {
 		   Move m = new Move();
 		   if (info.adversaryPresent) {
-			   m.edge = info.adversaryDirection;
 			   m.move = true;
+			   m.edge = info.adversaryDirection;
 			   m.changeState = false;
 		   }
-		   if (this.sensesAlien()) && (info.adversaryDirection != myShip.getPath(pNode, crnode).get(0)){
+		   /*if (this.sensesAlien()) && (info.adversaryDirection != myShip.getPath(pNode, crnode).get(0)){
 				   Move thisMove= new Move();
 				   thisMove.edge= myShip.getPath(pNode, crnode).get(0);
 				   thisMove.changeState= true;}
@@ -46,7 +43,7 @@ public class Predator implements Agent {
 				thisMove.edge= myShip.getPath(pNode, crnode).get(0);
 				thisMove.changeState= false;
 				}	
-
+		    */
 		   return null;
 	   }
    }
