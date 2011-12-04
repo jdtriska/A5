@@ -1,4 +1,5 @@
 package avp;
+import ugraph.Edge;
 
 public class Move {
 

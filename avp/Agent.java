@@ -1,5 +1,5 @@
 package avp;
-
+import ugraph.*;
 /**
  * Describes the functionality of an agent, either the Alien or the Predator.
  * Implementing classes must have a parameterless constructor.

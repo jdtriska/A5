@@ -1,9 +1,5 @@
-//hello world
-//cornell 2012
-
 package avp;
-
-import Ship.*;
+import ugraph.*;
 
 public class Alien implements Agent {
 
@@ -20,7 +16,7 @@ public class Alien implements Agent {
 	    *           for the Alien.
 	    */
 	   public void init(Ship ship) {
-		   this.myShip = ship;
+		   return;
 	   }
 
 	   /**
@@ -49,4 +45,5 @@ public class Alien implements Agent {
 		   
 		   return null;
 	   }
+
 	}
