@@ -5,7 +5,9 @@ public class Predator implements Agent {
 
 	//represents predator's perception of the ship
 		private Ship myShip;
-	
+		public Predator() {
+			myShip = null;
+		}
 	/**
 	    * Called to initialize the agent. The parameter ship gives the agent's
 	    * initial view of the ship. It is {@code null} for the Alien and reality for
@@ -16,8 +18,9 @@ public class Predator implements Agent {
 	    *           for the Alien.
 	    */
 	   public void init(Ship ship){
-		   //get the control room node
-		  //pick random nodes until you get to one that is a certain distance, place predator there
+		   myShip = ship;
+		   //get the control room node 
+		   //pick random nodes until you get to one that is a certain distance, place predator there
 	   }
 
 	   /**

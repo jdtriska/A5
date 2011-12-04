@@ -1,12 +1,15 @@
+//****/
 package ugraph;
-
+import avp.*
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import ugraph.UGraph;
+
 import edu.cornell.cs.cs2110.RandomBag;
-import avp.GameConstants;
 
 
 public class Ship implements UGraph<Node, Edge>, GameConstants {
@@ -15,6 +18,9 @@ public class Ship implements UGraph<Node, Edge>, GameConstants {
 	Set<Edge> edges;
 
 	Ship() {
+		nodes = new HashSet<Node>();
+		edgegrid = new RandomBag<Edge>();
+		edges = new HashSet<Edge>();
 		int WIDTH = GameConstants.WIDTH;
 		int HEIGHT = GameConstants.HEIGHT;
 		int mult = WIDTH * HEIGHT;
@@ -41,7 +47,7 @@ public class Ship implements UGraph<Node, Edge>, GameConstants {
 	public void removeNode(Node node) {
 		nodes.remove(node);
 		for(Edge e : edges) {
-			Set<ugraph.Node> adj = e.getAdjacent();
+			Set<avp.Node> adj = e.getAdjacent();
 			if(adj.contains(node))
 				removeEdge(e);
 		}

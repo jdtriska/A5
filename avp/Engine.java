@@ -5,9 +5,11 @@ public class Engine {
 	static boolean alienNext;
 	private Ship ship;
 	private Predator predator;
-	private Alien alien; 
-	private static Info pInfo; //predator's info
-	private static Info aInfo; //alien's info
+	private Alien alien;
+	private Node pNode;
+	private Node aNode;
+	private Info pInfo; //predator's info
+	private Info aInfo; //alien's info
 	int aCounter; //specifies alien's number of turns remaining until last move is completed
 	int pCounter;//specifies predator's number of turns remaining until last move is completed
 	
@@ -19,9 +21,21 @@ public class Engine {
 		alien.init(ship);
 		pInfo = updateInfo(pInfo);
 		aInfo = updateInfo(aInfo);
+		aNode = getANode();
+		pNode = getPNode();
 		play();
 	}
 	
+	private Node getPNode() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	private Node getANode() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	public static void main(String[] args) {
 		new Engine();
 	}

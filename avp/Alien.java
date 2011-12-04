@@ -5,6 +5,9 @@ public class Alien implements Agent {
 
 	//represents alien's perception of the ship
 	private Ship myShip;
+	public Alien() {
+		myShip = null;
+	}
 	
 	/**
 	    * Called to initialize the agent. The parameter ship gives the agent's
@@ -16,7 +19,7 @@ public class Alien implements Agent {
 	    *           for the Alien.
 	    */
 	   public void init(Ship ship) {
-		   return;
+		   myShip = null;
 	   }
 
 	   /**
