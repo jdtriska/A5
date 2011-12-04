@@ -1,4 +1,5 @@
 package avp;
+import ugraph.*;
 
 public class Engine {
 	static boolean alienNext;
@@ -26,7 +27,9 @@ public class Engine {
 	}
 	
 	public void play() {
-		while (!pInfo.atControlRoom && ship.){
+		pInfo = updateInfo(pInfo);
+		aInfo = updateInfo(aInfo);
+		while (!pInfo.atControlRoom && ){
 			if (alienNext){
 				alien.nextMove(aInfo);
 				update aInfo
