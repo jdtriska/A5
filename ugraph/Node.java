@@ -1,4 +1,4 @@
-package ugraph;
+package avp;
 
 import java.util.HashMap;
 import java.util.Set;
@@ -17,17 +17,17 @@ public class Node implements UGraphComponent<Edge>, Comparable<Node> {
 		y = yc;
 		edges = new HashMap<Edge, Edge>();
 	}
-	Node(int xc, int yc, Edge e1) {
-		x = xc;
-		y = yc;
-		edges = new HashMap<Edge, Edge>();
-		edges.put(e1, e1);
-	}
 	public int getValue() {
 		return value;
 	}
 	public void setValue(int z) {
 		value = z;
+	}
+	public void addAdjacent(Edge e) {
+		edges.put(e,  e);
+	}
+	public void setAdjacent(HashMap<Edge, Edge> es) {
+		edges = es;
 	}
 	public Set<Edge> getAdjacent() {
 		return edges.keySet();

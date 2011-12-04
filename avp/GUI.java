@@ -2,9 +2,7 @@ package avp;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Graphics;
-import java.util.HashSet;
 import java.util.Set;
 
 import javax.swing.JFrame;
@@ -24,10 +22,11 @@ public class GUI extends JFrame {
 	Color backColor = new Color(0, 0, 250);
 
 	Ship myShip;
-	   GUI(Ship s) {
-	      super("CS2110 Alien vs Predator!");
-	      myShip = s;
-	      }
+	   
+	GUI(Ship s) {
+	   super("CS2110 Alien vs Predator!");
+	   myShip = s;
+	}
 
 
    final JPanel canvas = new JPanel() {
@@ -49,27 +48,27 @@ public class GUI extends JFrame {
    		         graphics.setColor(backColor);
    		   graphics.fillRect(x-5,y-5,10,10);
    		   Set<Edge> es = n.getAdjacent();
-   		   if (es.contains(new Edge((x+1)%WIDTH, y%HEIGHT)))
+   		   if (es.contains(new Edge(n, new Node((x+1)%WIDTH, y%HEIGHT))))
    		       graphics.setColor(controlColor);
    		   else
    		       graphics.setColor(backColor);
-        	   graphics.fillRect(x+OFFSET,y,V_CELL_SIZE,V_THICKNESS);
-   		   if (es.contains(new Edge((x-1)%WIDTH, y%HEIGHT)))
+           graphics.fillRect(x+OFFSET,y,V_CELL_SIZE,V_THICKNESS);
+   		   if (es.contains(new Edge(n, new Node((x-1)%WIDTH, y%HEIGHT))))
    		       graphics.setColor(controlColor);
    		   else
    		       graphics.setColor(backColor);
-        	   graphics.fillRect(x-OFFSET,y,V_CELL_SIZE,V_THICKNESS);
-   		   if (es.contains(new Edge(x%WIDTH, (y+1)%HEIGHT)))
+           graphics.fillRect(x-OFFSET,y,V_CELL_SIZE,V_THICKNESS);
+   		   if (es.contains(new Edge(n, new Node(x%WIDTH, (y+1)%HEIGHT))))
    			   graphics.setColor(controlColor);
    		   else
    		       graphics.setColor(backColor);
-        	   graphics.fillRect(x,y+OFFSET,H_CELL_SIZE,H_THICKNESS);
-   		   if (es.contains(new Edge(x%WIDTH, (y-1)%HEIGHT)))
+      	   graphics.fillRect(x,y+OFFSET,H_CELL_SIZE,H_THICKNESS);
+   		   if (es.contains(new Edge(n, new Node(x%WIDTH, (y-1)%HEIGHT))))
    			   graphics.setColor(controlColor);
    		   else
    		       graphics.setColor(backColor);
-        	   graphics.fillRect(x,y-OFFSET,H_CELL_SIZE,H_THICKNESS);
-   	}
+       	   graphics.fillRect(x,y-OFFSET,H_CELL_SIZE,H_THICKNESS);
+   			}
    	   }
    };
 }

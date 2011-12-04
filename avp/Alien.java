@@ -31,6 +31,9 @@ public class Alien implements Agent {
 	    */
 	   public Move nextMove(Info info) {
 		   Move m = new Move();
+		   if (info.ship != null) {
+			   myShip = info.ship;
+		   }
 		   if (info.adversaryPresent) {
 			   m.edge = info.adversaryDirection;
 			   m.move = true;

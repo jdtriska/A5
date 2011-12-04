@@ -1,4 +1,4 @@
-package ugraph;
+package avp;
 
 import java.util.HashMap;
 import java.util.Set;
@@ -11,6 +11,10 @@ public class Edge implements UGraphComponent<Node>, Comparable<Edge> {
 	Edge() {}
 	Edge(Node n1, Node n2) {
 		endpoints = new HashMap<Node, Node>();
+		endpoints.put(n1, n1);
+		endpoints.put(n2, n2);
+	}
+	public void setAdjacent(Node n1, Node n2) {
 		endpoints.put(n1, n1);
 		endpoints.put(n2, n2);
 	}

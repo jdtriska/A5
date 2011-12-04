@@ -1,8 +1,9 @@
 //****/
-package ugraph;
-import avp.*
+package avp;
+
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -13,14 +14,14 @@ import edu.cornell.cs.cs2110.RandomBag;
 
 
 public class Ship implements UGraph<Node, Edge>, GameConstants {
-	Set<Node> nodes;
+	Map<Node, Node> nodes;
 	RandomBag<Edge> edgegrid;
-	Set<Edge> edges;
+	Map<Edge, Edge> edges;
 
 	Ship() {
-		nodes = new HashSet<Node>();
+		nodes = new HashMap<Node, Node>();
 		edgegrid = new RandomBag<Edge>();
-		edges = new HashSet<Edge>();
+		edges = new HashMap<Edge, Edge>();
 		int WIDTH = GameConstants.WIDTH;
 		int HEIGHT = GameConstants.HEIGHT;
 		int mult = WIDTH * HEIGHT;
@@ -28,71 +29,102 @@ public class Ship implements UGraph<Node, Edge>, GameConstants {
 			for(int x = 0; x < WIDTH; x++) {
 				Node current = new Node(x, y);
 				addNode(current);
-				edgegrid.insert(new Edge((x+1)%WIDTH, y%HEIGHT)); /*********TO BE FIXED ************/
-				edgegrid.insert(new Edge((x-1)%WIDTH, y%HEIGHT));
-				edgegrid.insert(new Edge(x%WIDTH, (y+1)%HEIGHT));
-				edgegrid.insert(new Edge(x%WIDTH, (y-1)%HEIGHT));
+				edgegrid.insert(new Edge(current, new Node((x+1)%WIDTH, y%HEIGHT)));
+				edgegrid.insert(new Edge(current, new Node((x-1)%WIDTH, y%HEIGHT)));
+				edgegrid.insert(new Edge(current, new Node(x%WIDTH, (y+1)%HEIGHT)));
+				edgegrid.insert(new Edge(current, new Node(x%WIDTH, (y-1)%HEIGHT)));
 			}
 		spanningTree();
 		for(int x = 0; x < Math.sqrt(mult); x++) {
 			Edge e = edgegrid.extract();
-			if(edges.contains(e)==false)
+			if(edges.containsKey(e)==false)
 				addEdge(e);
 		}
 	}
 
+	Ship(Map<Node, Node> nm, Map<Edge, Edge> em) {
+		nodes = nm;
+		edges = em;
+	}
+	
 	public void addNode(Node node) {
-		nodes.add(node);
+		nodes.put(node, node);
 	}
 	public void removeNode(Node node) {
 		nodes.remove(node);
-		for(Edge e : edges) {
+		for(Edge e : edges.keySet()) {
 			Set<avp.Node> adj = e.getAdjacent();
 			if(adj.contains(node))
 				removeEdge(e);
 		}
 	}
 	public void addEdge(Edge edge) {
-		edges.add(edge);
+		edges.put(edge, edge);
 	}
 	public void removeEdge(Edge edge) {
 		edges.remove(edge);
 	}
-	public UGraph<Node, Edge> clone() { /*********TO BE FIXED ************/
-		UGraph<Node, Edge> news = new Ship();
-		for(Node n : nodes) {
-			Node newn = new Node(n.getX(), n.getY(), n.getAdjacent());	
-			newn.setValue(n.getValue());
+	public UGraph<Node, Edge> clone() {
+		HashMap<Node, Node> newnm = new HashMap<Node, Node>();
+		HashMap<Edge, Edge> newem = new HashMap<Edge, Edge>();
+		
+		for(Node n : nodes.keySet()) {
+			Node tempnode = new Node(n.getX(), n.getY());
+			tempnode.setValue(n.getValue());
+			newnm.put(tempnode,  tempnode);
+
 		}
-		for(Edge e : edges) {
-			Edge newe = new Edge(e.getAdjacent());		
+		for(Node n : nodes.keySet()) {
+			Set<Edge> tempedges = n.getAdjacent();
+			HashMap<Edge, Edge> newadjedges = new HashMap<Edge, Edge>();
+			Iterator<Edge> iter = tempedges.iterator();
+			while(iter.hasNext()) {
+				Edge tempedge = (Edge)(iter.next());
+				Set<Node> tempnodes = tempedge.getAdjacent();
+				Node start = (Node)(tempnodes.iterator().next());
+				Node end = (Node)(tempnodes.iterator().next());
+				
+				Node newStart = newnm.get(start);
+				Node newEnd = newnm.get(end);
+				
+				Edge newEdge = new Edge(newStart, newEnd);
+				newem.put(newEdge,  newEdge);
+				
+				newadjedges.put(newEdge, newEdge);
+			}
+			newnm.get(n).setAdjacent(newadjedges);			
 		}
-		return null;
+		UGraph<Node, Edge> news = new Ship(newnm, newem);
+		return news;
 	}
 	public Set<Node> getNodes() {
-		return nodes;
+		return nodes.keySet();
 	}
 	public Set<Edge> getEdges() {
-		return edges;
+		return edges.keySet();
 	}
 	public UGraph<Node, Edge> spanningTree() {
 		UGraph<Node, Edge> news = new Ship();
 		for(int y = 0; y < HEIGHT; y++)
 			for(int x = 0; x < WIDTH; x++)
 				news.addNode(new Node(x, y));
-		while(edgegrid.size()>0)
+		while(edgegrid.size()>0) {
 			Edge e = edgegrid.extract();
 			Set<Node> es = e.getAdjacent();
-			if(getPath(es.
-					pop(), es.pop()) == null)
+			
+			Node start = (Node)(es.iterator().next());
+			Node end = (Node)(es.iterator().next());
+			
+			if(getPath(start, end) == null)
 				news.addEdge(e);
-		return null;
+		}
+		return news;
 	}
 	public List<Edge> getPath(Node start, Node end) { /*********TO BE FIXED ************/
 		Map<Node, Integer> dist = new HashMap<Node, Integer>();
 		Map<Node, Node> prev = new HashMap<Node, Node>();
 		
-		
+		/*
 		Set<Edge> es = start.getAdjacent();
 		for(Edge e : es) {
 			visited.insert();
@@ -117,6 +149,8 @@ public class Ship implements UGraph<Node, Edge>, GameConstants {
 			}
 		}
 		return null;
+
+*/
 
 		/*
 		dist = ( infinity )
@@ -143,11 +177,11 @@ public class Ship implements UGraph<Node, Edge>, GameConstants {
 		}*/
 
 		List<Edge> seq = new LinkedList<Edge>();
-		Node x = end;
+		/*Node x = end;
 		while(prev[x] != null) {
 			seq.insert(seq);
 			x = prev[x];
-		}
+		}*/
 		return seq;
 	}
 }

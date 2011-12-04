@@ -32,6 +32,9 @@ public class Predator implements Agent {
 	    */
 	   public Move nextMove(Info info) {
 		   Move m = new Move();
+		   if (info.ship != null) {
+			   myShip = info.ship;
+		   }
 		   if (info.adversaryPresent) {
 			   m.move = true;
 			   m.edge = info.adversaryDirection;
